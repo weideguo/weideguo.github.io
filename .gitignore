@@ -12,3 +12,4 @@ node_modules
 _site/
 *.bak
 .jekyll-cache/
+nohup.out
