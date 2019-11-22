@@ -13,7 +13,6 @@ tags:
 
 <img src="/img/post/python.png"/>
 
-
-
+from [xkcd.com](https://xkcd.com/353/)
 
 
