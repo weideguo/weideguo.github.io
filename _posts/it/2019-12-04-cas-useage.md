@@ -1,6 +1,6 @@
 ---
 title: "cas use demo"
-subtitle: "cas的简单试用样例"
+subtitle: "cas的简单使用样例"
 layout: post
 author: "wdg"
 header-style: text
@@ -21,7 +21,7 @@ from [apereo.github.io/cas](https://apereo.github.io/cas/5.2.x/protocol/CAS-Prot
 
 # 流程说明
 
-* 前端跳转至cas，登陆cas获取ticket并重新跳转至前端置顶页面，前端将ticket给后端。
+* 前端跳转至cas，登陆cas获取ticket并重新跳转至前端页面，前端将ticket给后端。
 
 * 后端访问cas验证ticket。
 
