@@ -59,7 +59,16 @@ MAMA_CAS_SERVICES = [
         ],
         'PROXY_ALLOW': True,
         'PROXY_PATTERN': 'https://192.168.59.132:9000',   #必须使用https
-    }
+    },
+    {
+        'SERVICE': 'https://192.168.59.132:9000',
+        'CALLBACKS': [
+            #'mama_cas.callbacks.user_model_attributes',
+            'mama_cas.callbacks.user_name_attributes'
+        ],
+        'PROXY_ALLOW':True,
+        'PROXY_PATTERN': 'https://192.168.59.132:9000'
+    },
 ]
 ```
 ```python
@@ -102,6 +111,32 @@ r.text
 u'<cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas"><cas:authenticationSuccess><cas:user>admin</cas:user><cas:attributes><cas:full_name /><cas:short_name /><cas:username>admin</cas:username></cas:attributes><cas:proxies><cas:proxy>https://192.168.59.132:7000</cas:proxy></cas:proxies></cas:authenticationSuccess></cas:serviceResponse>'
 ```
 
+### django-mama-cas 定制修改 ###
+```python
+#settings.py
+
+#cas处于登陆状态时再次获取ticket是否要先经过确认
+#MAMA_CAS_ALLOW_AUTH_WARN=True
+#默认前端再次确认使用的页面 可以修改为其他定制页面
+#MAMA_CAS_WARN_TEMPLATE='mama_cas/warn.html'
 
 
+#默认前端登陆使用页面 可以修改为其他定制页面
+MAMA_CAS_LOGIN_TEMPLATE='mama_cas/login.htm
+```
+```shell
+#表单登陆研究
+csrftoken="m9cnyS9rj2dIZCQdCy5r5atPfjMGoogIr0ELOENJWFu8lTJlTdfBS2WsETszfibL"            #获取表单html时设置的cookie
+csrfmiddlewaretoken="I2u2qNtcjUeqTlG7UIAwvhMxI2hOyOf3NTWqGz7uWxvQfCzfbnKGi9fa7CXHpIa6"  #从表单的隐藏项获取
+username="cas_user"                                       #从表单获取
+passwd="cas_user_passwd"                                  #从表单获取
+login_url="http://192.168.59.132:9095/cas/login"          #提交的路径跟表单所处的路径一致
+#login_url="http://192.168.59.132:9095/cas/login?service=http://192.168.59.132:8080/"  
+#没有service时重定向到登陆表单的页面
 
+curl "${login_url}" --cookie "csrftoken=${csrftoken}" -d "csrfmiddlewaretoken=${csrfmiddlewaretoken}&username=${username}&password=${passwd}" -v
+#返回header携带
+#Set-Cookie 实现cookie设置，用于与后端session的绑定，实现登陆状态保持
+#Location   实现重定向
+
+```
