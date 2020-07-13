@@ -42,7 +42,7 @@ var tatris=[[0x6600],[0x2222,0xf00],[0xc600,0x2640],[0x6c00,0x4620],[0x4460,0x2e
 
 var keycom={"38":"rotate(1)","40":"down()","37":"move(2,1)","39":"move(0.5,-1)"};
 
-var dia, pos, bak, runId;
+var dia, pos, bak, run;
 
 function start(){
 
@@ -57,9 +57,11 @@ function start(){
 function over(){
 
     document.onkeydown=null;
-
+    
+    var runiId = sessionStorage.getItem("runid")
+    runId=parseInt(runiId);
     clearInterval(runId);
-
+    
     alert("GAME OVER");
 
 }
@@ -149,6 +151,7 @@ document.onkeydown=function(e){
 start();
 
 runiId=setInterval("down()",400);
+sessionStorage.setItem("runid",runiId)
 
 function updateScore(){
     score = sessionStorage.getItem("score")
