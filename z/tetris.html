@@ -7,7 +7,14 @@
 </head>
 <body>
 
-<div id="box" style="width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
+<div id="box" style="margin: 0 auto;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
+
+<div style="margin: 0 auto;margin-top: 30px;width:310px;">
+<button onclick="move(2,1)" style="height:50px;width:50px;">←</button>
+<button onclick="rotate(1)" style="height:50px;width:50px;margin-left: 30px">↑</button>
+<button onclick="down()" style="height:50px;width:50px;margin-left: 30px">↓</button>
+<button onclick="move(0.5,-1)" style="height:50px;width:50px;margin-left: 30px">→</button>
+</div>
 
 <script>
 
@@ -120,6 +127,7 @@ function move(t,k){
 document.onkeydown=function(e){
 
     eval(keycom[(e?e:event).keyCode]);
+    // eval(keycom[(e.keyCode]);
 
 };
 
