@@ -42,7 +42,7 @@ var tatris=[[0x6600],[0x2222,0xf00],[0xc600,0x2640],[0x6c00,0x4620],[0x4460,0x2e
 
 var keycom={"38":"rotate(1)","40":"down()","37":"move(2,1)","39":"move(0.5,-1)"};
 
-var dia, pos, bak, run;
+var dia, pos, bak, runId;
 
 function start(){
 
@@ -58,7 +58,7 @@ function over(){
 
     document.onkeydown=null;
 
-    clearInterval(run);
+    clearInterval(runId);
 
     alert("GAME OVER");
 
