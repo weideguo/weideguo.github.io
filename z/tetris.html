@@ -1,26 +1,40 @@
 ﻿<!doctype html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=0.8,maximum-scale=0.8,user-scalable=0">
 <title>
 俄罗斯方块
 </title>
 </head>
 <body>
 
-<div id="box" style="margin: 0 auto;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
-
-<div style="margin: 0 auto;margin-top: 30px;width:310px;">
-<button onclick="move(2,1)" style="height:50px;width:50px;">←</button>
-<button onclick="rotate(1)" style="height:50px;width:50px;margin-left: 30px">↑</button>
-<button onclick="down()" style="height:50px;width:50px;margin-left: 30px">↓</button>
-<button onclick="move(0.5,-1)" style="height:50px;width:50px;margin-left: 30px">→</button>
+<div >
+    <div id="option" style="position:fiexd;float:left;width:10px;height:5px;">
+        <div><button onclick="restart()" style="height:50px;width:50px;">restart</button></div>
+        <div id="score" style="margin-top:10px">0000</div>
+    </div>
+    <div style="position:fiexd;float:right;width:10px;height:5px;">
+        <button onclick="pause()" style="margin-left:-45px;height:50px;width:50px;">pause</button>
+    </div>
+    <div id="box" style="position:fiexd;top:0;margin: 0 auto;;width:252px;font:25px/25px 宋体;background:#000;color:#9f9;border:#999 20px ridge;text-shadow:2px 3px 1px #0f0;"></div>
 </div>
-
+<div style="clear:both">
+    <div style="margin: 0 auto;margin-top: 5%;width:50px;">
+    <button onclick="rotate(1)" style="height:50px;width:50px;">↑</button>
+    </div>
+    
+    <div style="margin: 0 auto;width:80%;margin-top: 2%">
+    <button onclick="move(2,1)" style="height:50px;width:50px;">←</button>
+    <button onclick="move(0.5,-1)" style="height:50px;width:50px;float:right">→</button>
+    </div>
+    
+    <div style="margin: 0 auto;margin-top: 2%;width:50px;">
+    <button onclick="down()" style="height:50px;width:50px;">↓</button>
+    </div>
+    </div>
 <script>
 
-var domain="www.zuidaima.com";
-
-var author="zuidaima";
+var score = 0;
 
 var map=eval("["+Array(23).join("0x801,")+"0xfff]");
 
@@ -56,36 +70,36 @@ function update(t){
 
     if(t) return;
 
-    for(var i=0,a2=""; i<22; i++)
+    for(var i=0,a2=""; i<22; i++) {
 
         a2+=map[i].toString(2).slice(1,-1)+"<br/>";
+    }
+    for(var i=0,n; i<4; i++) {
 
-    for(var i=0,n; i<4; i++)
-
-        if(/([^0]+)/.test(bak.fk[i].toString(2).replace(/1/g,"\u25a1")))
-
-            a2=a2.substr(0,n=(bak.y+i+1)*15-RegExp.$_.length-4)+RegExp.$1+a2.slice(n+RegExp.$1.length);
-
+        if(/([^0]+)/.test(bak.fk[i].toString(2).replace(/1/g,"\u25a1"))) {
+            a2=a2.substr(0,n=(bak.y+i+1)*15-RegExp.$_.length-4)+RegExp.$1+a2.slice(n+RegExp.$1.length); 
+            //console.log("1");
+        }
+    }
     document.getElementById("box").innerHTML=a2.replace(/1/g,"\u25a0").replace(/0/g,"\u3000");
 
 }
 
 function is(){
 
-    for(var i=0; i<4; i++)
-
-        if((pos.fk[i]&map[pos.y+i])!=0) return pos=bak;
-
+    for(var i=0; i<4; i++) {
+        if((pos.fk[i]&map[pos.y+i])!=0) {return pos=bak;}
+    }
 }
 
 function rotate(r){
 
     var f=dia[pos.s=(pos.s+r)%dia.length];
 
-    for(var i=0; i<4; i++)
+    for(var i=0; i<4; i++) {
 
         pos.fk[i]=(f>>(12-i*4)&15)<<pos.x;
-
+    }
     update(is());
 
 }
@@ -96,13 +110,14 @@ function down(){
 
     if(is()){
 
-        for(var i=0; i<4 && pos.y+i<22; i++)
+        for(var i=0; i<4 && pos.y+i<22; i++) {
 
-            if((map[pos.y+i]|=pos.fk[i])==0xfff)
-
+            if((map[pos.y+i]|=pos.fk[i])==0xfff) {
                 map.splice(pos.y+i,1), map.unshift(0x801);
-
-        if(map[1]!=0x801) return over();
+                updateScore();
+            }
+        }
+        if(map[1]!=0x801) {return over();}
 
         start();
 
@@ -116,10 +131,10 @@ function move(t,k){
 
     pos.x+=k;
 
-    for(var i=0; i<4; i++)
+    for(var i=0; i<4; i++) {
 
-        pos.fk[i]*=t;
-
+        pos.fk[i]*=t; 
+    }
     update(is());
 
 }
@@ -133,8 +148,46 @@ document.onkeydown=function(e){
 
 start();
 
-run=setInterval("down()",400);
+runiId=setInterval("down()",400);
+
+function updateScore(){
+    score = sessionStorage.getItem("score")
+    if (score === null) {
+        score=0;
+    } else {
+        score=parseInt(score);
+    }
+    score += 1;
+    sessionStorage.setItem("score",score);
+    document.getElementById("score").innerText=score;
+    console.log(score)
+}
+
+function restart(){
+    window.location.reload();
+}
+function pause(){
+    alert("PAUSE");
+}
+
+/*
+function downOption(){
+    var runiId = sessionStorage.getItem("runid")
+    if (runiId === null ){
+        // 没有运行
+        runiId=setInterval("down()",400);
+        sessionStorage.setItem("runid",runiId)
+    } else {
+        // 处于运行
+        console.log(runiId)
+        clearInterval(runiId)
+        sessionStorage.removeItem("runid")
+    }
+}
+downOption();
+*/
 
 </script>
+
 </body>
 </html>
