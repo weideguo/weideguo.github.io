@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>
+YI
+</title>
+<script type="text/javascript" charset="utf8" src="./yi.js"></script>
+</head>
+<body>
+<!--
+三个变量 
+值为：   0 1 
+对应为： 2 3
+即：
+111 9 阳  ——————
+110 8 阴  ——  ——
+100 7 阳  —————— 
+000 6 阴  ——  ——
+
+
+按6次，由下网上对应卦
+
+-->
+
+
+<div style="height:600px;">
+    <div id="yao" style="margin: 0 auto;height:300px;width:150px;margin-top:50px"></div>
+</div>
+<div style="clear:both"></div>
+
+<div hidden id="opt_button" style="position:fiexd;margin: 0 auto;width:50px;margin-top:50px">
+<button style="margin-top:10px;height:50px;width:50px;">X</button>
+</div>
+<script>
+
+var CLEAR=0;
+var yao_list=[];
+
+function getYaoRaw() {
+    // 爻 3变量
+    var yaoRaw = [];
+    for (var i=0;i<3;i++) {
+        var subYao = Math.round(Math.random()*1000000) % 2;
+        yaoRaw.push(subYao)
+    }
+    // console.log("yaoRaw: "+yaoRaw)
+    return yaoRaw
+}
+
+function _getYao(yaoRaw){
+    // 由原始的爻信息推算出爻
+    var yaoInt=0;
+    for( var yr in yaoRaw) {
+        if(yaoRaw[yr] === 1) {
+            yaoInt += 3;
+        } else {
+            yaoInt += 2;
+        }
+    }
+    var yao=0;
+    if ( yaoInt === 6 || yaoInt === 8 ) {
+        yao=0
+    } else if ( yaoInt === 7 || yaoInt === 9 ) {
+        yao=1
+    } else {
+        alert("ERROR yao int: "+yaoInt+yaoRaw);
+    }
+    // console.log("yaoInt: "+yaoInt)
+    return yao
+}
+
+
+function getYao() {
+    var yaoRaw = [];
+    var yao = 0;   
+    yaoRaw = getYaoRaw();
+    yao = _getYao(yaoRaw);
+    return yao
+}
+
+function getGua() {
+    // 卦 6爻
+    var gua=[]
+    for (var i=0;i<6;i++) {
+        gua.push(getYao())
+        //console.log(gua)
+    }
+    return gua
+}
+
+function drawYao(yaoRaw) {
+    var yao = _getYao(yaoRaw);
+    yao_list.push(yao)
+    var yaoStr= yaoRaw + " ------------ "+yao
+    console.log(yaoStr)
+    
+    // document.getElementById("yao").innerHTML="";
+    for(var i in yaoRaw) {
+        var node = null;
+        node = document.createElement("DIV");
+        if(yaoRaw[i] === 1) {
+            node.style="width:50px;height:50px;float:left;background-image: url(icons/1.svg);background-repeat: no-repeat;"
+        } else {
+            node.style="width:50px;height:50px;float:left;background-image: url(icons/0.svg);background-repeat: no-repeat;"
+        }
+        document.getElementById("yao").appendChild(node)
+    }
+}
+
+function operation() {
+    var num = yao_list.length
+    
+    // console.log(num)
+    if (CLEAR === 1) {
+        CLEAR=0;
+        yao_list=[];
+        document.getElementById("yao").innerHTML="";
+        alert("CLEAR");
+    } else if (num === 6) {
+        CLEAR=1;
+        showGua();
+    } else {
+        drawYao(getYaoRaw());
+    } 
+}
+
+function showGua(){
+
+    var gua=yao_list
+    var gua_int=list2int(gua)
+    var gua_raw=YI[gua_int]
+    console.log(gua+" "+gua_int+" "+gua_raw[0]+" "+gua_raw[1])   
+    alert(gua_raw[0]+"\n"+gua_raw[1]) 
+}
+
+function list2int(l){
+    var r=0;
+    for(var i in l) {
+        r += (2**i) * l[i]
+    }
+    return r
+}
+
+
+function screenAdapte(){
+    //宽度低于该值则认为是移动端
+    if (window.screen.width < 1500) {
+        //禁止页面滑动
+        document.body.style.overflow='hidden';
+        // document.addEventListener("touchmove",function(e){passive: false ;},false);
+        document.addEventListener("touchstart",function(e){
+            //console.log(e)
+            operation()
+        })
+        
+    } else {
+        document.addEventListener("click",function(e){
+            //console.log(e)
+            operation()
+        })
+        document.getElementById("opt_button").removeAttribute("hidden");
+    }
+}
+
+screenAdapte()
+
+
+</script>
+
+</body>
+</html>
