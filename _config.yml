@@ -6,9 +6,9 @@ header-img: img/home-bg.jpg
 email: 2515717245@qq.com
 description: "wdg, dba"
 keyword: "wdg, dba, RDBMS, database, mysql, nosql, oracle, mongodb, redis, python, linux"
-url: "https://zouzhicun.github.io"              # your host, for absolute URL
+url: "https://weideguo.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-poweredby: "https://github.com/zouzhicun"
+poweredby: "https://github.com/weideguo"
 
 
 
@@ -19,7 +19,7 @@ future: true
 
 # SNS settings
 RSS: true
-github_username:    zouzhicun
+github_username:    weideguo
 
 
 
@@ -85,6 +85,6 @@ service-worker: true
 friends: [
     {
         title: "me",
-        href: "https://github.com/zouzhicun"
+        href: "https://github.com/weideguo"
     }
 ]

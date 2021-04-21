@@ -16,13 +16,13 @@ gem install jekyll-paginate
 ######################################
 
 ##创建新项目
-# jekyll new zouzhicun.github.io   
+# jekyll new weideguo.github.io   
 
 ##当前文件夹中的内容将会生成到 ./_site 文件夹中，即可当成静态文件使用
 # jekyll build   
 
 #运行
-cd zouzhicun.github.io
+cd weideguo.github.io
 jekyll serve
 jekyll serve --host 0.0.0.0 --port 4000
 ```
@@ -31,7 +31,7 @@ jekyll serve --host 0.0.0.0 --port 4000
 
 # github pages
 提交此代码到对应仓库    
-url   https://zouzhicun.github.io
+url   https://weideguo.github.io
 
 
 

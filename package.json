@@ -3,12 +3,12 @@
     "title": "wdg blog",
     "author": "2515717245@qq.com",
     "version": "0.1.0",
-    "homepage": "http://zouzhicun.github.io",
+    "homepage": "http://weideguo.github.io",
     "repository": {
         "type": "git",
-        "url": "https://github.com/zouzhizun/zouzhicun.github.io"
+        "url": "https://github.com/zouzhizun/weideguo.github.io"
     },
-    "bugs": "https://github.com/zouzhizun/zouzhicun.github.io/issues",
+    "bugs": "https://github.com/zouzhizun/weideguo.github.io/issues",
     "devDependencies": {
         "grunt": "~0.4.5",
         "grunt-contrib-less": "~0.11.4",
