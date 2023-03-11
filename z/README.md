@@ -9,6 +9,7 @@ tree -f -P "*.html" z
 
 ```
 z
+├── z/snake.html
 ├── z/tetris.html
 └── z/yi
     ├── z/yi/icons
