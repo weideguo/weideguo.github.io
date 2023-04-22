@@ -11,6 +11,7 @@ tree -f -P "*.html" z | grep -v navigation
 
 ```
 z
+├── z/random_string.html
 ├── z/snake.html
 ├── z/tetris.html
 └── z/yi

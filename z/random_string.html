@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>
+random string
+</title>
+</head>
+<body>
+
+<script>
+
+
+function getRandomStr(basicStr, strLength) {
+    let str = ""
+    let l = basicStr.length
+    let r = parseInt(Math.random()*l)  //从0开始
+    let c = basicStr.slice(r,r+1)
+    str += c
+    for (let i=0;i<strLength;i++) {
+        r = parseInt(Math.random()*l)
+        let n = basicStr.slice(r,r+1)
+        if ( n == c ) {
+            i = i-1
+        } else { 
+            c = n
+            str += c
+        }   
+    }
+    return str
+}
+
+
+function getexcludeStr(basicStr, excludeChar ) {
+    // let excludeChar = ["l","o","O"]
+    basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
+    excludeChar.forEach((c) => {
+        let i = basicStr.indexOf(c)
+        if ( i != -1 ) {
+            basicStr = basicStr.slice(0,i)+basicStr.slice(i+1)
+        }
+    })
+    return basicStr
+}
+
+let requestParams = {}
+
+window.location.search.substr(1).split("&").forEach((l) => {
+    let kv = decodeURIComponent(l).split("=")
+    // console.log(kv)
+    try {
+        requestParams[kv[0]] = parseInt(kv[1])
+        if ( isNaN(kv[1]) ) {
+            requestParams[kv[0]] = kv[1]
+        }
+    } catch(e) {
+        requestParams[kv[0]] = kv[1]
+    }
+})
+
+let strLength = requestParams["l"]     // 通过url中的l参数确定长度
+if ( isNaN(strLength) || strLength == undefined ){
+    strLength = 16
+}
+
+let strType = requestParams["t"]     // 通过url中的t参数确定字符串类型
+if ( isNaN(strType) || strType == undefined ){
+    strType = 0
+}
+
+let excludeStr = requestParams["e"]     // 通过url中的e参数确定怕排除的特殊字符
+
+let numberStr = "1234567890"
+let specialIdentifier = "~!@#$%^&*-=[];',./<>?:{}|_+\""
+let lowerAlphabetStr = "qwertyuiopasdfghjklzxcvbnm"
+let upperAlphabetStr = "QWERTYUIOPASDFGHJKLZXCVBNM"
+
+let basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
+switch (strType){
+    case 0:
+        basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
+        break;
+    case 1:
+        // 不包含特殊字符
+        basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr
+        break;
+        
+    case 2:
+        // 只有数字
+        basicStr = numberStr
+        break;
+    case 3:
+        // 不包含容易混淆的
+        basicStr = basicStr
+        break;
+    case 4:
+        // 不包含逃逸字符 
+        basicStr = basicStr
+        break;
+    default :
+        basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
+}
+if ( !isNaN(excludeStr) && excludeStr != undefined ) {
+    console.log(excludeStr)
+    basicStr = getexcludeStr(basicStr, excludeStr.split(""))
+}
+
+console.log(window.location.search.substr(1))
+console.log(requestParams)
+let randomStr = getRandomStr(basicStr,strLength)
+console.log( randomStr )
+alert( randomStr )
+
+</script>
+
+<div style="margin-left:100px; margin-top:30px">
+
+    <div style="margin-top:30px">
+        <a href="?l=16&t=0"> 0 默认 数字+大小写字母+特殊字符 </a>
+    </div>
+    <div style="margin-top:30px">
+        <a href="?l=16&t=1"> 1 不包含特殊字符 </a>
+    </div>
+    <div style="margin-top:30px">
+        <a href="?l=16&t=2"> 2 只有数字 </a>
+    </div>
+    <div style="margin-top:30px">
+        <a href="?l=16&t=3&e=loO"> 3 不包含容易混淆的字符</a> <span> ( l o O ) </span>
+    </div>
+    <div style="margin-top:30px">
+        <a href="?l=16&t=4&e=%27%22"> 4 不包含逃逸字符</a> <span> ( ' " )</span>
+    </div>
+    <div style="margin-top:60px">
+        <p>l 长度，默认16</p>
+        <p>t 类型，默认0</p>
+        <p>e 排除字符，默认为空</p>
+    </div>
+    <div style="margin-top:60px">
+        <code>
+            url中必须转义的字符                                 </br>
+            字符    &nbsp;&nbsp;                URL编码         </br>
+            空格    &nbsp;&nbsp;                %20             </br>
+            " &nbsp;&nbsp;&nbsp;&nbsp;          %22              </br>
+            # &nbsp;&nbsp;&nbsp;&nbsp;          %23              </br>
+            % &nbsp;&nbsp;&nbsp;&nbsp;          %25              </br>
+            & &nbsp;&nbsp;&nbsp;&nbsp;          %26              </br>
+            ' &nbsp;&nbsp;&nbsp;&nbsp;          %27              </br>
+            ( &nbsp;&nbsp;&nbsp;&nbsp;          %28              </br>
+            ) &nbsp;&nbsp;&nbsp;&nbsp;          %29              </br>
+            + &nbsp;&nbsp;&nbsp;&nbsp;          %2B              </br>
+            , &nbsp;&nbsp;&nbsp;&nbsp;          %2C              </br>
+            / &nbsp;&nbsp;&nbsp;&nbsp;          %2F              </br>
+            : &nbsp;&nbsp;&nbsp;&nbsp;          %3A              </br>
+            ; &nbsp;&nbsp;&nbsp;&nbsp;          %3B              </br>
+            < &nbsp;&nbsp;&nbsp;&nbsp;          %3C              </br>
+            = &nbsp;&nbsp;&nbsp;&nbsp;          %3D              </br>
+            > &nbsp;&nbsp;&nbsp;&nbsp;          %3E              </br>
+            ? &nbsp;&nbsp;&nbsp;&nbsp;          %3F              </br>
+            @ &nbsp;&nbsp;&nbsp;&nbsp;          %40              </br>
+            \ &nbsp;&nbsp;&nbsp;&nbsp;          %5C              </br>
+            | &nbsp;&nbsp;&nbsp;&nbsp;          %7C              </br>
+                                                                 </br>
+            其他字符可以根据ascii表选择转义                     </br>
+        </code>
+    </dev>
+</div>
+</body>
+</html>
+
+
