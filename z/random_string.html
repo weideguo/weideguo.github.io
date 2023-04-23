@@ -78,7 +78,7 @@ if ( isNaN(strType) || strType == undefined ){
     strType = 0
 }
 
-let excludeStr = requestParams["e"]     // 通过url中的e参数确定怕排除的特殊字符
+let excludeStr = String(requestParams["e"])     // 通过url中的e参数确定怕排除的特殊字符
 
 let numberStr = "1234567890"
 let specialIdentifier = "~!@#$%^&*-=[];',./<>?:{}|_+\"`"
