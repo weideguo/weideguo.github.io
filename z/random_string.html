@@ -43,7 +43,7 @@ function getRandomStr(basicStr, strLength) {
 
 function getexcludeStr(basicStr, excludeChar ) {
     // let excludeChar = ["l","o","O"]
-    basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
+    // basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
     excludeChar.forEach((c) => {
         let i = basicStr.indexOf(c)
         if ( i != -1 ) {
@@ -114,9 +114,9 @@ if ( !isNaN(excludeStr) && excludeStr != undefined ) {
     console.log(excludeStr)
     basicStr = getexcludeStr(basicStr, excludeStr.split(""))
 }
-
 console.log(window.location.search.substr(1))
 console.log(requestParams)
+console.log(basicStr)
 let randomStr = getRandomStr(basicStr,strLength)
 console.log( randomStr )
 alert( randomStr )
