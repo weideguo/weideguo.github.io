@@ -27,7 +27,7 @@ function getRandomStr(basicStr, strLength) {
     let r = parseInt(Math.random()*l)  //从0开始
     let c = basicStr.slice(r,r+1)
     str += c
-    for (let i=0;i<strLength;i++) {
+    for (let i=1;i<strLength;i++) {
         r = parseInt(Math.random()*l)
         let n = basicStr.slice(r,r+1)
         if ( n == c ) {
