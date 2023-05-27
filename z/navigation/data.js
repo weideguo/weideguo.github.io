@@ -44,6 +44,7 @@ right_info = [
 ["https://cn.vuejs.org/","vuecn","", ""],
 ["https://www.iviewui.com/","iviewui","", ""],
 ["https://element.eleme.io/","element","", ""],
+["https://js1024.fun/","js1024","", "一些有趣的js项目，非常小代码量"],
 
 ],[],]],
 
