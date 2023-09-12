@@ -1,6 +1,6 @@
 ---
-title: "surender of jp"
--- subtitle: "surender of jp"
+title: "surrender of jp"
+-- subtitle: "surrender of jp"
 layout: post
 -- author: "wdg"
 header-style: text 
