@@ -11,6 +11,9 @@ tree -f -P "*.html" z | grep -v navigation
 
 ```
 z
+├── z/blockoverit.html
+├── z/matrix.html
+├── z/minesweeper.html
 ├── z/random_string.html
 ├── z/snake.html
 ├── z/tetris.html
