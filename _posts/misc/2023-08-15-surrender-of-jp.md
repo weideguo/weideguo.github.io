@@ -9,3 +9,4 @@ tags:
 ---
 
 <img src="/img/post/1945.jpeg"/>
+<img src="/img/post/instrument_of_surrender.jpeg"/>
