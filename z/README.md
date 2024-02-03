@@ -11,6 +11,7 @@ tree -f -P "*.html" z | grep -v navigation
 
 ```
 z
+├── z/2048.html
 ├── z/blockoverit.html
 ├── z/matrix.html
 ├── z/minesweeper.html
