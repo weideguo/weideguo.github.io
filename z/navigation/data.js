@@ -56,6 +56,7 @@ right_info = [
 
 ["技术杂项", [[
 ["https://db-engines.com/","DB-Engines","", ""],
+["https://www.tiobe.com/tiobe-index/","tiobe","", "编程语言排行榜"],
 
 ],[],]],
 
