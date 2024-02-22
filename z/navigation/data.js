@@ -4,7 +4,7 @@
 */
 left_info = [
 ["常用推荐" ,[] ],
-["技术" ,["数据库","编程语言","前端","安全","技术杂项"] ],
+["技术" ,["数据库","编程语言","安装包","前端","安全","技术杂项"] ],
 ]
 
 
@@ -24,24 +24,40 @@ right_info = [
 ],[],]],
 
 ["数据库", [[
-["https://www.mysql.com/","mysql","", ""],
-["https://mariadb.org/","mariadb","", ""],
-["https://www.postgresql.org/","postgresql","", ""], 
-["https://www.mongodb.com/","mongodb","", ""], 
-["https://www.redis.com/","redis","", ""], 
+["https://www.mysql.com/","mysql","./assets/images/logos/mysql.svg", ""],
+["https://mariadb.org/","mariadb","./assets/images/logos/mariadb.png", ""],
+["https://www.postgresql.org/","postgresql","./assets/images/logos/postgresql.png", ""], 
+["https://www.mongodb.com/","mongodb","./assets/images/logos/mongodb.svg", ""], 
+["https://www.redis.com/","redis","./assets/images/logos/redis.png", ""], 
 ],[],]],
 
 ["编程语言", [[
-["https://www.golang.org/","golang","", ""],
-["https://golang.google.cn/","golangcn","", ""],
-["https://www.python.org/","python","", ""],
-["https://www.cppreference.com/","c++参考文档","",""],
-["https://developer.mozilla.org/","mdn js","","mozilla的js参考文档"],
-],[],]],
+["https://www.golang.org/","golang","./assets/images/logos/Go.webp", ""],
+["https://golang.google.cn/","golangcn","./assets/images/logos/Go.webp", ""],
+["https://www.python.org/","python","./assets/images/logos/python.ico", ""],
+],
+[
+["https://www.cppreference.com/","c++参考文档","./assets/images/logos/C__.webp",""],
+["https://developer.mozilla.org/","mdn js","./assets/images/logos/JavaScript.webp","mozilla的js参考文档"],
+["https://zh-google-styleguide.readthedocs.io/en/latest/contents/", "Google 开源项目风格指南", "./assets/images/logos/google.ico", ""],
+],
+]],
+
+["安装包", [[
+["https://pypi.org/","python pypi","./assets/images/logos/pypi.svg", "Python Package Index"],
+["https://mvnrepository.com/","mvn仓库","./assets/images/logos/mvn.ico", "java jar包"],
+["https://pkg.go.dev/","golang包","./assets/images/logos/go.svg", ""],
+["https://pkgs.org/","linux包","./assets/images/logos/tux.png", ""],
+],
+[
+["https://developer.aliyun.com/mirror/","阿里云国内镜像","", ""],
+["https://mirrors.cloud.tencent.com/","腾讯云国内镜像","", ""],
+],
+]],
 
 ["前端", [[
-["https://vuejs.org/","vue","", ""],
-["https://cn.vuejs.org/","vuecn","", ""],
+["https://vuejs.org/","vue","./assets/images/logos/vue.svg", ""],
+["https://cn.vuejs.org/","vuecn","./assets/images/logos/vue.svg", ""],
 ["https://www.iviewui.com/","iviewui","", ""],
 ["https://element.eleme.io/","element","", ""],
 ["https://js1024.fun/","js1024","", "一些有趣的js项目，非常小代码量"],
@@ -61,6 +77,7 @@ right_info = [
 ],[],]],
 
 ["前沿研究", [[
+["https://arxiv.org","arxiv",  "", "论文预印本，pdf https://arxiv.org/pdf/2305.10403.pdf"],
 ["https://www.vldb.org/","vldb",  "", "Very Large Data Base"],
 ["https://sigmod.org/",  "sigmod","", "ACM Special Interest Group on Management of Data"],
 ["http://www.kdd.org/",  "sigkdd","", "ACM Special Interest Group on Knowledge Discovery and Data Mining"]
