@@ -81,9 +81,10 @@ if ( isNaN(strType) || strType == undefined ){
 let excludeStr = String(requestParams["e"])     // 通过url中的e参数确定怕排除的特殊字符
 
 let numberStr = "1234567890"
-let specialIdentifier = "~!@#$%^&*-=[];',./<>?:{}|_+\"`"
+let specialIdentifier = "~!@#$%^&*-=[];',./<>?:{}|_+\"`\\()"
 let lowerAlphabetStr = "qwertyuiopasdfghjklzxcvbnm"
 let upperAlphabetStr = "QWERTYUIOPASDFGHJKLZXCVBNM"
+let shellSafeSpecialIdentifier = "~@%^*-=[],./?:{_+"  // {,}
 
 let basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
 switch (strType){
@@ -106,6 +107,10 @@ switch (strType){
     case 4:
         // 不包含逃逸字符 
         basicStr = basicStr
+        break;
+    case 5:
+        // 只含shell安全的字符 
+        basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+shellSafeSpecialIdentifier
         break;
     default :
         basicStr = numberStr+lowerAlphabetStr+upperAlphabetStr+specialIdentifier
@@ -139,6 +144,9 @@ alert( randomStr )
     </div>
     <div style="margin-top:1%">
         <a href="?l=16&t=4&e=%27%22"> 4 不包含逃逸字符</a> <span> ( ' " )</span>
+    </div>
+    <div style="margin-top:1%">
+        <a href="?l=16&t=5"> 5 只含shell安全的字符</a>
     </div>
     <div style="margin-top:2%">
         <p>l 长度，默认16</p>
