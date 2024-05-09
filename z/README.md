@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Others"
-header-img: "img/others-bg.png"
+header-img: "img/others-bg.jpg"
 ---
 # others
 [网址导航](/z/navigation/index.html)
