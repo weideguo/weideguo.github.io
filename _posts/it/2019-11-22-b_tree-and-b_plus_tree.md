@@ -7,6 +7,7 @@ header-style: text
 tags:
   - tree
   - 数据结构
+  - index
 ---
 
 <img src="/img/post/b_plus_tree.png"/>
