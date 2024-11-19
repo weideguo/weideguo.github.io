@@ -14,7 +14,7 @@ tags:
 > 用于实现单点登录
 
 # CAS 流程
-<img src="/img/post/cas_flow_diagram.png"/>
+<img src="/img/post/it/cas_flow_diagram.png"/>
 from [apereo.github.io/cas](https://apereo.github.io/cas/5.2.x/protocol/CAS-Protocol.html)
 
 

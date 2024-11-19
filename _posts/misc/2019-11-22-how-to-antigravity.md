@@ -9,7 +9,7 @@ tags:
   - joke
 ---
 
-<img src="/img/post/python.png"/>
+<img src="/img/post/misc/python_antigravity.png"/>
 
 from [xkcd.com](https://xkcd.com/353/)
 

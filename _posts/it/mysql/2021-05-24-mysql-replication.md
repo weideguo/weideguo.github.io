@@ -9,5 +9,5 @@ tags:
 ---
 
 mysql复制
-<img src="/img/post/mysql_repl.png"/>
+<img src="/img/post/it/mysql_repl.png"/>
 

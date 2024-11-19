@@ -9,5 +9,5 @@ tags:
 ---
 
 utf8是变长编码
-<img src="/img/post/utf8.jpg"/>
+<img src="/img/post/it/utf8.jpg"/>
 

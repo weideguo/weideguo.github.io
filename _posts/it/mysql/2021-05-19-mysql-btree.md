@@ -10,7 +10,7 @@ tags:
 ---
 
 innodb
-<img src="/img/post/btree_index_btree_innodb.png"/>
+<img src="/img/post/it/btree_index_btree_innodb.png"/>
 
 myisam
-<img src="/img/post/btree_index_btree_myisam.png"/>
+<img src="/img/post/it/btree_index_btree_myisam.png"/>

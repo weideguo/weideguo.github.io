@@ -16,7 +16,7 @@ tags:
 >
 > 极容易存在漏洞，不要对所有外网开放SSH端口。
 
-<img src="/img/post/freeSSHd.png"/>
+<img src="/img/post/it/freeSSHd.png"/>
 
 
 ### cygwin 安装 ###

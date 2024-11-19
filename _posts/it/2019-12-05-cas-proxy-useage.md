@@ -15,7 +15,7 @@ tags:
 > 如应用app1要请求app2的接口，app2可以通过proxy功能验证app1的登陆状态
 
 # CAS proxy 流程
-<img src="/img/post/cas_proxy_flow_diagram.jpg"/>
+<img src="/img/post/it/cas_proxy_flow_diagram.jpg"/>
 from [apereo.github.io/cas](https://apereo.github.io/cas/5.2.x/protocol/CAS-Protocol.html)
 
 

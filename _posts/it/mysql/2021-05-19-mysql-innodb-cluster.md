@@ -9,5 +9,5 @@ tags:
   - innodb
 ---
 
-<img src="/img/post/mysql_innodb_cluster.png"/>
+<img src="/img/post/it/mysql_innodb_cluster.png"/>
 

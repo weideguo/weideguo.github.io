@@ -8,5 +8,5 @@ tags:
   - history
 ---
 
-<img src="/img/post/1945.jpeg"/>
-<img src="/img/post/instrument_of_surrender.jpeg"/>
+<img src="/img/post/misc/1945.jpeg"/>
+<img src="/img/post/misc/instrument_of_surrender.jpeg"/>

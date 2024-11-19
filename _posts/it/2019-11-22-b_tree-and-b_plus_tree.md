@@ -10,6 +10,6 @@ tags:
   - index
 ---
 
-<img src="/img/post/b_plus_tree.png"/>
+<img src="/img/post/it/b_plus_tree.png"/>
 
-<img src="/img/post/b_tree_and_b_plus_tree_diff.png"/>
+<img src="/img/post/it/b_tree_and_b_plus_tree_diff.png"/>

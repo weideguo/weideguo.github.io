@@ -7,4 +7,4 @@ tags:
   - mysql
 ---
 
-<img src="/img/post/mysql_segment_extent_page_record.jpg"/>
+<img src="/img/post/it/mysql_segment_extent_page_record.jpg"/>
