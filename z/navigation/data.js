@@ -3,7 +3,7 @@
 通过名称跟左边关联
 */
 left_info = [
-["常用推荐" ,[] ],
+["常用推荐" ,["常用","工具"] ],
 ["技术" ,["数据库","编程语言","安装包","前端","安全","技术杂项"] ],
 ]
 
@@ -18,9 +18,19 @@ logo        可选，为空则显示default.png
 */
 
 right_info = [
-["常用推荐", [[
+["常用", [[
 ["http://www.sysu.edu.cn/","中山大学","./assets/images/logos/sysu.jpg", "为什么不去康乐园逛逛呢"],
-["https://weideguo.github.io/","github page","", ""], 
+["https://weideguo.github.io/","github page","https://github.githubassets.com/favicons/favicon.svg", ""], 
+],[],]],
+
+["工具", [[
+["http://asciiflow.com/","asciiflow","", "以文本方式绘制流程图"],
+["https://www.drawio.com/","drawio","https://app.diagrams.net/favicon.ico", "开源的流程图绘制"],
+["https://www.zenflowchart.com/","zenflowchart","", "流程图绘制（需要登录）"],
+["https://songlh.top/paint-board/","paint-board","https://songlh.top/paint-board/canvas.svg", "画板工具"],
+["https://excalidraw.com/","excalidraw","https://excalidraw.com/favicon-32x32.png", "框线图绘制"],
+["https://play.d2lang.com/","d2lang","https://play.d2lang.com/favicon.ico", "基于文本代码的绘制示意图"],
+["https://icraft.gantcloud.com/","icraft","", "3D架构图"],
 ],[],]],
 
 ["数据库", [[
