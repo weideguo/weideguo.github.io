@@ -1,0 +1,161 @@
+<!-- 由 deepseek 生成
+使用纯html、js、css实现一个页面，中间显示数字，点击左边则减一，右边则加一，弹性布局适应移动端
+按照绝对的中间划分左右，两部分所有位置都可以点击
+显示数字的部分为圆形
+点击中间的圆形时不进行数字更改
+左上和右上再分别用一个圆形实现左右连续点击的次数，如果另外一边点击，则置为0
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyCounter</title>
+  <style>
+    /* 全局样式 */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      overflow: hidden; /* 防止滚动 */
+    }
+
+    /* 容器样式 */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 中间数字样式 */
+    .number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      font-weight: bold;
+      color: #333;
+      background-color: #fff;
+      width: 200px; /* 圆形宽度 */
+      height: 200px; /* 圆形高度 */
+      border-radius: 50%; /* 设置为圆形 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+      pointer-events: visible; /* 拦截点击事件 */
+      z-index: 2; /* 确保圆形区域在点击区域上方 */
+    }
+
+    /* 左右点击区域样式 */
+    .click-area {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: calc(50%); /* 减去圆形区域的一半宽度 */
+      z-index: 1; /* 确保点击区域在圆形区域下方 */
+    }
+
+    .left {
+      left: 0;
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+
+    .right {
+      right: 0;
+      background-color: rgba(0, 0, 255, 0.02);
+    }
+
+    /* 左上和右上的圆形区域样式 */
+    .counter {
+      position: absolute;
+      top: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      pointer-events: none; /* 禁止拦截点击事件 */
+      z-index: 3; /* 确保位于最上层 */
+    }
+
+    .left-counter {
+      left: 20px;
+    }
+
+    .right-counter {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 左侧点击区域 -->
+    <div class="click-area left" id="left"></div>
+    <!-- 右侧点击区域 -->
+    <div class="click-area right" id="right"></div>
+    <!-- 中间数字 -->
+    <div class="number" id="number">0</div>
+    <!-- 左上计数 -->
+    <div class="counter left-counter" id="left-counter">0</div>
+    <!-- 右上计数 -->
+    <div class="counter right-counter" id="right-counter">0</div>
+  </div>
+
+  <script>
+    // 获取元素
+    const numberElement = document.getElementById('number');
+    const leftCounterElement = document.getElementById('left-counter');
+    const rightCounterElement = document.getElementById('right-counter');
+    const leftArea = document.getElementById('left');
+    const rightArea = document.getElementById('right');
+
+    // 初始化数字
+    let number = 0;
+    let leftCount = 0;
+    let rightCount = 0;
+
+    // 更新数字显示
+    function updateNumber() {
+      numberElement.textContent = number;
+    }
+
+    // 更新计数显示
+    function updateCounters() {
+      leftCounterElement.textContent = leftCount;
+      rightCounterElement.textContent = rightCount;
+    }
+
+    // 左侧点击逻辑
+    leftArea.addEventListener('click', () => {
+      number--;
+      leftCount++;
+      rightCount = 0; // 右侧计数置为 0
+      updateNumber();
+      updateCounters();
+    });
+
+    // 右侧点击逻辑
+    rightArea.addEventListener('click', () => {
+      number++;
+      rightCount++;
+      leftCount = 0; // 左侧计数置为 0
+      updateNumber();
+      updateCounters();
+    });
+
+    // 初始化
+    updateNumber();
+    updateCounters();
+  </script>
+</body>
+</html>
