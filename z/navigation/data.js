@@ -26,11 +26,13 @@ right_info = [
 ["工具", [[
 ["http://asciiflow.com/","asciiflow","", "以文本方式绘制流程图"],
 ["https://www.drawio.com/","drawio","https://app.diagrams.net/favicon.ico", "开源的流程图绘制"],
+["https://schem.io/","schemio","", "开源的流程图绘制"],
 ["https://www.zenflowchart.com/","zenflowchart","", "流程图绘制（需要登录）"],
 ["https://songlh.top/paint-board/","paint-board","https://songlh.top/paint-board/canvas.svg", "画板工具"],
 ["https://excalidraw.com/","excalidraw","https://excalidraw.com/favicon-32x32.png", "框线图绘制"],
 ["https://play.d2lang.com/","d2lang","https://play.d2lang.com/favicon.ico", "基于文本代码的绘制示意图"],
 ["https://icraft.gantcloud.com/","icraft","", "3D架构图"],
+["https://mermaid.live/","mermaid","https://mermaid.live/favicon.svg", "基于文本代码的绘制示意图，可在github使用"],
 ],[],]],
 
 ["数据库", [[
