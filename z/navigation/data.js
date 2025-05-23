@@ -51,7 +51,7 @@ right_info = [
 [
 ["https://www.cppreference.com/","c++参考文档","./assets/images/logos/C__.webp",""],
 ["https://developer.mozilla.org/","mdn js","./assets/images/logos/JavaScript.webp","mozilla的js参考文档"],
-["https://zh-google-styleguide.readthedocs.io/en/latest/contents/", "Google 开源项目风格指南", "./assets/images/logos/google.ico", ""],
+["https://zh-google-styleguide.readthedocs.io/en/latest/", "Google 开源项目风格指南", "./assets/images/logos/google.ico", "英文原始版 https://google.github.io/styleguide/"],
 ["https://peps.python.org/pep-0008/", "Style Guide for Python Code", "./assets/images/logos/python.ico", ""],
 ],
 ]],
