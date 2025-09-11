@@ -11,21 +11,25 @@ header-img: "img/others-bg.jpg"
 
 ```shell
 #生成以下目录信息
-tree -f -P "*.html" z | grep -v navigation 
+tree -f -P "*.html|*.svg" z | grep -vE "(z/navigation/assets|z/yi/icons)"
 ```
 
 ```
 z
 ├── z/2048.html
+├── z/alliance.html
 ├── z/blockoverit.html
+├── z/chat_show.html
 ├── z/matrix.html
 ├── z/minesweeper.html
 ├── z/mycounter.html
+├── z/navigation
+│   └── z/navigation/index.html
 ├── z/random_string.html
 ├── z/snake.html
 ├── z/tetris.html
+├── z/tetris.svg
 └── z/yi
-    ├── z/yi/icons
     └── z/yi/yi.html
 
 ```

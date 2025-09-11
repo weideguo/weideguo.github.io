@@ -1,0 +1,262 @@
+<!--代码由trae生成-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图表生成</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select,
+        textarea,
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .clearable-input {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .clearable-input input {
+            padding-right: 25px;
+        }
+        .clearable-input .clear-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #999;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clearable-input .clear-btn:hover {
+            color: #333;
+        }
+        #result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        #result-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+        #request-url {
+            word-break: break-all;
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        .error-message {
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="apiForm">
+        <div class="form-group">
+            <label for="basePath">基础路径</label>
+            <div class="clearable-input">
+                <input type="text" id="basePath" list="basePathOptions" value="https://quickchart.io" placeholder="请输入基础路径">
+                <datalist id="basePathOptions">
+                    <option value="https://quickchart.io">
+                    <!--option value="自己部署的服务器的基础路径"-->
+                </datalist>
+                <button type="button" class="clear-btn" onclick="clearBasePath()">×</button>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="method">方法</label>
+            <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="QR">二维码</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="requestBody">请求内容（格式参考：https://quickchart.io/documentation）</label>
+            <textarea id="requestBody" 
+placeholder="展示图表时为json格式内容，二维码时为任意字符串。
+当为方法POST时，只能使用双引号包含字符串。"></textarea>
+        </div>
+        
+        <button type="button" onclick="submitForm()">提交</button>
+    </form>
+    
+    <div id="result-container">
+        <h3>请求结果</h3>
+        <div id="request-url"></div>
+        <div id="result-content"></div>
+    </div>
+
+    <script>
+        // 清除基础路径输入框内容
+        function clearBasePath() {
+            document.getElementById('basePath').value = '';
+        }
+        
+        function fetchImg(requestUrl) {
+            const resultContainer = document.getElementById('result-container');
+            const resultContentElement = document.getElementById('result-content');
+            resultContentElement.innerHTML = '';
+            fetch(requestUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('网络响应错误: ' + response.status);
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        // 创建图片元素并显示
+                        const imageUrl = URL.createObjectURL(blob);
+                        const img = document.createElement('img');
+                        img.id = 'result-image';
+                        img.src = imageUrl;
+                        img.alt = '图表结果';
+                        resultContentElement.appendChild(img);
+                        
+                        // 显示结果容器
+                        resultContainer.style.display = 'block';
+                    })
+                    .catch(error => {
+                        showError('请求失败: ' + error.message);
+                    });
+        }
+
+
+        // 提交表单并发送请求
+        function submitForm() {
+            // 获取表单值
+            const baseUrl = document.getElementById('basePath').value;
+            const requestBody = document.getElementById('requestBody').value;
+            const method = document.getElementById('method').value;
+            
+            const requestUrlElement = document.getElementById('request-url');
+            requestUrlElement.textContent = '';
+
+            // 验证基础路径
+            if (!baseUrl) {
+                showError('请输入基础路径');
+                return;
+            }
+            if (!requestBody) {
+                showError('请输入请求内容');
+                return;
+            }
+            
+            if (method === 'GET') {
+                const c = requestBody.replace(/[\n\s]/g, '');
+                const displayUrl = baseUrl + '/chart?c=' + c;
+                const requestUrl = baseUrl + '/chart?c=' + encodeURIComponent(c);
+                requestUrlElement.textContent = displayUrl;
+                fetchImg(requestUrl);
+            } else if (method === 'POST') {
+                const url = baseUrl + '/chart/create';
+                
+                // 发送POST请求
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: requestBody
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('网络响应错误: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(response => {
+                        console.log(response);
+                        if (response.success) {
+                            const realUrl = response.url;
+                            requestUrlElement.textContent = realUrl;
+                            fetchImg(realUrl)
+                        } else{
+                            throw new Error(response);
+                        }
+                    })
+                    .catch(error => {
+                        showError('请求失败: ' + error.message);
+                    });
+            } else if (method === 'QR') {
+                const url = baseUrl + '/qr?text='+encodeURIComponent(requestBody);
+                console.log(url);
+                requestUrlElement.textContent = url;
+                fetchImg(url)
+            }
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            const resultContainer = document.getElementById('result-container');
+            const resultContentElement = document.getElementById('result-content');
+            
+            // 创建错误信息元素
+            const errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            errorElement.textContent = message;
+            
+            // 清空并添加错误信息
+            resultContentElement.innerHTML = '';
+            resultContentElement.appendChild(errorElement);
+            
+            // 显示结果容器
+            resultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

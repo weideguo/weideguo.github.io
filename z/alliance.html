@@ -1,0 +1,444 @@
+<!--代码由trae生成-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家军事同盟关系图</title>
+    <style>
+        body {
+            margin: 0; /* 移除页面默认边距 */
+            overflow: hidden; /* 防止出现滚动条 */
+        }
+        canvas {
+            display: block; /* 移除默认间隙 */
+            width: 100vw; /* 宽度充满视口 */
+            height: 100vh; /* 高度充满视口 */
+        }
+    </style>
+</head>
+<body>
+    <select id="timeSelector" style="position: absolute; top: 10px; left: 10px; z-index: 1;width:70px">
+        <!-- 选项会通过 JavaScript 动态生成 -->
+    </select>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        // 在窗口大小变化时更新画布尺寸
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        // 初始化画布尺寸
+        resizeCanvas();
+        // 监听窗口大小变化事件
+        window.addEventListener('resize', resizeCanvas);
+        const ctx = canvas.getContext('2d');
+
+        // 两国关系信息
+        const alliancesInfo = [
+            { "country1": "德国", "country2": "奥匈帝国", "start": 1879, "end": 1918, "agreement‌": "《德奥同盟条约》" },
+            { "country1": "德国", "country2": "意大利", "start": 1882, "end": 1915, "agreement‌": "《三国同盟条约》" },
+            { "country1": "英国", "country2": "法国", "start": 1904, "end": 1918, "agreement‌": "《英法协约》" },
+            { "country1": "英国", "country2": "俄罗斯", "start": 1907, "end": 1917, "agreement‌": "《英俄协约》" },
+            { "country1": "法国", "country2": "俄罗斯", "start": 1894, "end": 1917, "agreement‌": "《法俄同盟》" },
+            { "country1": "德国", "country2": "意大利", "start": 1939, "end": 1943, "agreement‌": "《钢铁盟约》" },
+            { "country1": "德国", "country2": "日本", "start": 1940, "end": 1945, "agreement‌": "《德意日三国同盟条约》" },
+            { "country1": "德国", "country2": "意大利", "start": 1940, "end": 1945, "agreement‌": "《德意日三国同盟条约》" },
+            { "country1": "意大利", "country2": "日本", "start": 1940, "end": 1945, "agreement‌": "《德意日三国同盟条约》" },
+            { "country1": "英国", "country2": "苏联", "start": 1941, "end": 1945, "agreement‌": "《英苏同盟条约》" },
+            { "country1": "法国", "country2": "德国", "start": 1963, "end": 9999, "agreement‌": "《爱丽舍宫条约》" },
+            { "country1": "中国", "country2": "苏联", "start": 1950, "end": 1960, "agreement‌": "《中苏友好同盟互助条约》" },
+            { "country1": "中国", "country2": "朝鲜", "start": 1961, "end": 9999, "agreement‌": "《中朝友好合作互助条约》" },
+            { "country1": "俄罗斯", "country2": "亚美尼亚", "start": 1992, "end": 9999, "agreement‌": "《独联体集体安全条约》" },
+            { "country1": "俄罗斯", "country2": "白俄罗斯", "start": 1992, "end": 9999, "agreement‌": "《独联体集体安全条约》" },
+            { "country1": "俄罗斯", "country2": "哈萨克斯坦", "start": 1992, "end": 9999, "agreement‌": "《独联体集体安全条约》" },
+            { "country1": "俄罗斯", "country2": "吉尔吉斯斯坦", "start": 1992, "end": 9999, "agreement‌": "《独联体集体安全条约》" },
+            { "country1": "俄罗斯", "country2": "塔吉克斯坦", "start": 1992, "end": 9999, "agreement‌": "《独联体集体安全条约》" },
+            { "country1": "俄罗斯", "country2": "白俄罗斯", "start": 1999, "end": 9999, "agreement‌": "《俄白联盟国家条约》" },
+            { "country1": "美国", "country2": "北约成员国", "start": 1949, "end": 9999, "agreement‌": "《北大西洋公约》" }, 
+            { "country1": "美国", "country2": "日本", "start": 1960, "end": 9999, "agreement‌": "《日美安全保障条约》" }, 
+            { "country1": "美国", "country2": "韩国", "start": 1953, "end": 9999, "agreement‌": "《美韩共同防御条约》" }, 
+            { "country1": "美国", "country2": "菲律宾", "start": 1951, "end": 9999, "agreement‌": "《美菲共同防御条约》" }, 
+            { "country1": "美国", "country2": "澳大利亚", "start": 1951, "end": 9999, "agreement‌": "《美澳新安全条约》" }, 
+            { "country1": "美国", "country2": "新西兰", "start": 1951, "end": 1986, "agreement‌": "《美澳新安全条约》" }, 
+            { "country1": "澳大利亚", "country2": "新西兰", "start": 1951, "end": 1986, "agreement‌": "《美澳新安全条约》" }, 
+            {"country1": "美国", "country2": "英国", "start": 1954, "end": 1977, "agreement‌": "《东南亚集体防务条约》"},
+            { "country1": "美国", "country2": "法国", "start": 1954, "end": 1977, "agreement‌": "《东南亚集体防务条约》" },
+            { "country1": "美国", "country2": "澳大利亚", "start": 1954, "end": 1977, "agreement‌": "《东南亚集体防务条约》" },
+            { "country1": "美国", "country2": "新西兰", "start": 1954, "end": 1977, "agreement‌": "《东南亚集体防务条约》" },
+            { "country1": "美国", "country2": "泰国", "start": 1954, "end": 1977, "agreement‌": "《东南亚集体防务条约》" },
+            { "country1": "美国", "country2": "菲律宾", "start": 1954, "end": 1972, "agreement‌": "《东南亚集体防务条约》" }, 
+            { "country1": "美国", "country2": "巴基斯坦", "start": 1954, "end": 1972, "agreement‌": "《东南亚集体防务条约》" },
+            { "country1": "美国", "country2": "美洲国家间互助条约成员国", "start": 1947, "end": 9999, "agreement‌": "《美洲国家间互助条约》" }
+
+        ];
+
+
+        // 提取所有国家名称并去重
+        const allCountries = [...new Set(alliancesInfo.flatMap(ally => [ally.country1, ally.country2]))];
+
+        // 计算两条线段的交点
+        function getIntersection(p1, p2, p3, p4) {
+            const denominator = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
+            if (denominator === 0) {
+                return null;
+            }
+
+            const t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / denominator;
+            const u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / denominator;
+
+            if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+                return {
+                    x: p1.x + t * (p2.x - p1.x),
+                    y: p1.y + t * (p2.y - p1.y)
+                };
+            }
+
+            return null;
+        }
+
+        // 计算所有交点
+        const intersections = [];
+        for (let i = 0; i < alliancesInfo.length; i++) {
+            for (let j = i + 1; j < alliancesInfo.length; j++) {
+                const p1 = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+                const p2 = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+                const p3 = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+                const p4 = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+                const intersection = getIntersection(p1, p2, p3, p4);
+                if (intersection) {
+                    intersections.push(intersection);
+                }
+            }
+        }
+
+        // 生成不重叠的随机坐标
+        function getNonOverlappingCoordinate(existingCountries, minDistance) {
+            let newX, newY;
+            let isValid;
+            do {
+                isValid = true;
+                newX = Math.random() * (canvas.width - 20) + 10;
+                newY = Math.random() * (canvas.height - 20) + 10;
+                for (let i = 0; i < existingCountries.length; i++) {
+                    const country = existingCountries[i];
+                    const distance = Math.sqrt((newX - country.x) ** 2 + (newY - country.y) ** 2);
+                    if (distance < minDistance) {
+                        isValid = false;
+                        break;
+                    }
+                }
+            } while (!isValid);
+            return { x: newX, y: newY };
+        }
+
+        // 为每个国家生成不重叠的随机坐标
+        const countries = [];
+        const minDistance = 30; // 节点间的最小距离
+        allCountries.forEach(country => {
+            const coord = getNonOverlappingCoordinate(countries, minDistance);
+            countries.push({ name: country, ...coord });
+        });
+
+        // 将关系信息中的国家名称转换为索引
+        let alliances = alliancesInfo.map(ally => ({
+            index1: countries.findIndex(c => c.name === ally.country1),
+            index2: countries.findIndex(c => c.name === ally.country2)
+        }));
+
+        let scale = 1;
+        let isDragging = false;
+
+        // 鼠标滚轮事件处理缩放
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            scale = Math.max(0.5, Math.min(2, scale + delta));
+            draw();
+        });
+
+        // 鼠标点击事件处理点选
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / scale;
+            const y = (e.clientY - rect.top) / scale;
+
+            for (let i = 0; i < countries.length; i++) {
+                const country = countries[i];
+                if (Math.sqrt((x - country.x) ** 2 + (y - country.y) ** 2) < 10) {
+                    selectedIndex = i;
+                    isDragging = true;
+                    break;
+                }
+            }
+        });
+
+        // 添加触摸开始事件处理点选
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // 阻止默认触摸行为
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / scale;
+            const y = (touch.clientY - rect.top) / scale;
+
+            for (let i = 0; i < countries.length; i++) {
+                const country = countries[i];
+                if (Math.sqrt((x - country.x) ** 2 + (y - country.y) ** 2) < 10) {
+                    selectedIndex = i;
+                    isDragging = true;
+                    break;
+                }
+            }
+        });
+
+        // 鼠标移动事件处理拖动
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging && selectedIndex !== -1) {
+                const rect = canvas.getBoundingClientRect();
+                countries[selectedIndex].x = (e.clientX - rect.left) / scale;
+                countries[selectedIndex].y = (e.clientY - rect.top) / scale;
+                draw();
+            }
+        });
+
+        // 添加触摸移动事件处理拖动
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // 阻止默认触摸行为
+            if (isDragging && selectedIndex !== -1) {
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                countries[selectedIndex].x = (touch.clientX - rect.left) / scale;
+                countries[selectedIndex].y = (touch.clientY - rect.top) / scale;
+                draw();
+            }
+        });
+
+        // 鼠标释放事件停止拖动
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // 添加触摸结束事件停止拖动
+        canvas.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+        let selectedIndex = -1;
+        // 绘制同盟关系连接线
+        function drawAlliances() {
+            // 全局声明 selectedIndex 变量，并初始化为 -1
+            
+            ctx.strokeStyle = selectedIndex === -1 ? 'blue' : 'rgba(0, 0, 255, 0.3)';
+            ctx.lineWidth = 2;
+            alliances.forEach(ally => {
+                const alpha = selectedIndex === -1 || ally.index1 === selectedIndex || ally.index2 === selectedIndex ? 1 : 0.3;
+                ctx.globalAlpha = alpha;
+                ctx.beginPath();
+                ctx.moveTo(countries[ally.index1].x, countries[ally.index1].y);
+                ctx.lineTo(countries[ally.index2].x, countries[ally.index2].y);
+                ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        // 绘制国家点和名称标签
+        function drawCountries() {
+            countries.forEach((country, index) => {
+                if (selectedIndex === -1) {
+                    ctx.fillStyle = 'red';
+                } else {
+                    const isRelated = alliances.some(alliance => 
+                        (alliance.country1Index === selectedIndex && alliance.country2Index === index) || 
+                        (alliance.country2Index === selectedIndex && alliance.country1Index === index)
+                    );
+                    ctx.fillStyle = isRelated ? 'red' : 'rgba(255, 0, 0, 0.3)';
+                }
+                // ctx.fillStyle = 'red';
+                if (index === selectedIndex) {
+                    ctx.fillStyle = 'green';
+                }
+                ctx.beginPath();
+                ctx.arc(country.x, country.y, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = 'black';
+                ctx.font = '14px Arial';
+                ctx.fillText(country.name, country.x + 15, country.y + 5);
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        // 显示协议信息的函数
+        function showAllianceInfo(allianceInfo) {
+            alert(allianceInfo.start+"-"+allianceInfo.end+" "+allianceInfo.agreement‌);
+        }
+
+        // 检查点击是否在连线上
+        function isClickOnLine(x, y, startX, startY, endX, endY) {
+            const lineLength = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+            const dist1 = Math.sqrt((x - startX) ** 2 + (y - startY) ** 2);
+            const dist2 = Math.sqrt((x - endX) ** 2 + (y - endY) ** 2);
+            const buffer = 2; // 点击误差范围
+            return Math.abs(dist1 + dist2 - lineLength) < buffer;
+        }
+
+        // 主绘制函数
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(scale, scale);
+            drawAlliances();
+            drawCountries();
+        }
+
+
+        // 假设这是计算点击位置是否在顶点内的函数
+        function isClickOnVertex(x, y, country) {
+            const dx = x - country.x;
+            const dy = y - country.y;
+            return Math.sqrt(dx * dx + dy * dy) <= 5; // 假设顶点半径为 5
+        }
+
+        // 修改鼠标点击事件处理，避免点击顶点时触发不必要逻辑
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / scale;
+            const y = (e.clientY - rect.top) / scale;
+
+            let found = false;
+            countries.forEach((country, index) => {
+                if (isClickOnVertex(x, y, country)) {
+                    selectedIndex = index;
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                selectedIndex = -1; // 未点击到顶点，恢复颜色
+            }
+            draw();
+        });
+
+        // 修改鼠标点击事件处理连线点击，确保只处理连线点击并筛选符合时间条件的协议
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / scale;
+            const y = (e.clientY - rect.top) / scale;
+
+            let isVertexClicked = false;
+            countries.forEach((country) => {
+                if (isClickOnVertex(x, y, country)) {
+                    isVertexClicked = true;
+                }
+            });
+
+            if (!isVertexClicked) {
+                const uniqueAgreements = new Set();
+                
+                alliances.forEach((ally, index) => {
+                    const startCountry = countries[ally.index1];
+                    const endCountry = countries[ally.index2];
+                    const allianceInfo = alliancesInfo.filter(info => 
+                        ((info.country1 === startCountry.name && info.country2 === endCountry.name) ||
+                        (info.country1 === endCountry.name && info.country2 === startCountry.name)) &&
+                        selectedTime >= info.start && (info.end === 9999 || selectedTime <= info.end)
+                    );
+
+                    allianceInfo.forEach(info => {
+                        if (isClickOnLine(x, y, startCountry.x, startCountry.y, endCountry.x, endCountry.y)) {
+                            const agreementKey = `${info.start}-${info.end}-${info.agreement‌}`;
+                            if (!uniqueAgreements.has(agreementKey)) {
+                                uniqueAgreements.add(agreementKey);
+                                showAllianceInfo(info);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        // 修改触摸结束事件处理，避免触摸顶点时触发不必要逻辑
+        canvas.addEventListener('touchend', (e) => { 
+            e.preventDefault();
+            const touch = e.changedTouches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / scale;
+            const y = (touch.clientY - rect.top) / scale;
+
+            let found = false;
+            countries.forEach((country, index) => {
+                if (isClickOnVertex(x, y, country)) {
+                    selectedIndex = index;
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                selectedIndex = -1; // 未触摸到顶点，恢复颜色
+            }
+            draw();
+        });
+
+
+        // 提取所有时间点并去重
+        const allTimes = [...new Set(alliancesInfo.flatMap(ally => [ally.start, ally.end]))].sort((a, b) => b - a);
+
+        // 获取下拉框元素
+        const timeSelector = document.getElementById('timeSelector');
+        let selectedTimeValue = timeSelector.value;
+        let selectedTime = parseInt(selectedTimeValue);
+
+        // 动态生成时间选项
+        allTimes.forEach(time => { 
+            const option = document.createElement('option');
+            option.value = time;
+            option.textContent = time === 9999 ? '至今' : time;
+            timeSelector.appendChild(option);
+        });
+
+        let currentAlliancesInfo = [];
+        let currentAlliances = [];
+
+        // 处理时间选择事件
+        function updateAlliances() { 
+            selectedTimeValue = timeSelector.value;
+            selectedTime = parseInt(selectedTimeValue);
+
+            // 检查转换结果
+            if (isNaN(selectedTime)) { 
+                console.error('无法将时间选择器的值转换为整数:', selectedTimeValue);
+                return;
+            }
+
+            currentAlliancesInfo = alliancesInfo.filter(ally => 
+                selectedTime >= ally.start && (ally.end === 9999 || selectedTime <= ally.end)
+            );
+
+            // 输出筛选后的同盟关系，方便调试
+            console.log('筛选后的同盟关系:', currentAlliancesInfo); 
+
+            // 重新生成同盟关系
+            currentAlliances = currentAlliancesInfo.map(ally => ({ 
+                index1: countries.findIndex(c => c.name === ally.country1),
+                index2: countries.findIndex(c => c.name === ally.country2)
+            }));
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            // 临时覆盖原同盟关系进行绘制
+            const originalAlliances = alliances;
+            alliances = currentAlliances;
+            // 直接调用绘制函数
+            drawAlliances();
+            drawCountries();
+            // alliances = originalAlliances;
+        }
+
+        // 监听下拉框变化事件
+        timeSelector.addEventListener('change', updateAlliances);
+
+        // 初始绘制
+        updateAlliances();
+    </script>
+</body>
+</html>
+
