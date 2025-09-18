@@ -17,7 +17,17 @@ mydumper 0.9.5
 
 ### mysqldump  
 ``` shell
-mysqldump --no-tablespaces --no-data=FALSE --default-character-set=utf8mb4 --set-gtid-purged=off --single-transaction --triggers=TRUE --events=TRUE --routines=TRUE --add-drop-table=FALSE test_db
+mysqldump                         \
+--no-tablespaces                  \
+--no-data=FALSE                   \
+--default-character-set=utf8mb4   \
+--set-gtid-purged=off             \
+--single-transaction              \
+--triggers=TRUE                   \
+--events=TRUE                     \
+--routines=TRUE                   \
+--add-drop-table=FALSE            \
+test_db
 ```
 
 ``` sql
@@ -147,7 +157,15 @@ mydumper --threads=2  -B test_db --less-locking  -C -o test_db_20241213_18
 
 ### mysqlpump  
 ``` shell
-mysqlpump -default-character-set=utf8mb4 --set-gtid-purged=off --single-transaction --triggers=TRUE --events=TRUE --routines=TRUE --add-drop-table=FALSE test_db
+mysqlpump                         \
+-default-character-set=utf8mb4    \
+--set-gtid-purged=off             \
+--single-transaction              \
+--triggers=TRUE                   \
+--events=TRUE                     \
+--routines=TRUE                   \
+--add-drop-table=FALSE            \
+test_db
 # 默认并发为2
 ```
 ``` sql
