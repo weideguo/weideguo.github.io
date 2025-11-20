@@ -19,7 +19,7 @@ z
 ├── z/2048.html
 ├── z/alliance.html
 ├── z/blockoverit.html
-├── z/chat_show.html
+├── z/chart_show.html
 ├── z/matrix.html
 ├── z/minesweeper.html
 ├── z/mycounter.html
