@@ -10,4 +10,4 @@ tags:
 
 # page信息
 
-<img src="/img/post/it/innodb_page.jpg"/>
+<img src="/img/post/it/innodb_page.jpg" style="width:100%" />
