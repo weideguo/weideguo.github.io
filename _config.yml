@@ -20,7 +20,7 @@ future: true
 # SNS settings
 RSS: true
 github_username:    weideguo
-
+codeberg_username:  wdg
 
 
 # Build settings
