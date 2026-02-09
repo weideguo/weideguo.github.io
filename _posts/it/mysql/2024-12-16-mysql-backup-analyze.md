@@ -32,7 +32,7 @@ test_db
 
 ``` sql
           FLUSH TABLE
-          FLUSH TABLES WITH READ LOCK                                 -- 开通用日志没有看到执行这两个，但实际执行时processlist中看到有执行这个？
+          FLUSH TABLES WITH READ LOCK                                 -- 开通用日志没有看到执行这两个，但实际执行时processlist中看到有执行这个？因为备份存储过程，而5.7中mysql.proc、mysql.event为非系统表？
 Connect   root@127.0.0.1 on  using TCP/IP
 Query     /*!40100 SET @@SQL_MODE='' */
 Query     /*!40103 SET TIME_ZONE='+00:00' */
@@ -80,6 +80,10 @@ Query     SHOW FUNCTION STATUS WHERE Db = 'test_db'
 Query     SHOW PROCEDURE STATUS WHERE Db = 'test_db'
 Query     SET SESSION character_set_results = 'utf8mb4'
 ```
+
+> 不启用`single-transaction`时，在备份每个表时加锁（LOCK TABLES ... READ）。即`lock-tables`的动作。  
+> `lock-all-tables`对所有表加全局读锁（FLUSH TABLES WITH READ LOCK）直至所有表备份结束。  
+> `skip-lock-tables`只用于只读或可接受不一致的场景。即关闭`lock-tables`。  
 
 ### xtrabackup    
 ``` shell
