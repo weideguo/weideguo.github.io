@@ -7,27 +7,27 @@ tags:
   - mysql
   - slave
   - xtrabackup
-  - innobackupex
 ---
 
 
 
 > mysql 5.7  
 > xtrabackup 2.4  
-
+> innobackupex 已经被移除，不要再使用  
 
 
 ## 0、备份
 
 ```shell
 # 相对于 `--stream=tar  $target_dir | gzip ->  $filename ` 能更好利用并发
-innobackupex --defaults-file=/data/mysql3306/conf/my.cnf           \
+xtrabackup --defaults-file=/data/mysql3306/conf/my.cnf             \
 --user="backup_user" --password="backup_password"                  \
 --host=127.0.0.1 --port=3306                                       \
 --parallel=8                                                       \
 --tmpdir=/tmp                                                      \
 --stream=xbstream  --compress --compress-threads=8                 \
-/data/mysql_data_backup > /data/mysql_data_backup/10.0.0.2_3306_20260205.xbstream
+--backup                                                           \
+> /data/mysql_data_backup/10.0.0.2_3306_20260205.xbstream
 ```
 
 
@@ -53,11 +53,11 @@ xtrabackup                             \
 --datadir=10.0.0.2_3306 --target-dir=10.0.0.2_3306
 
 # 应用日志
-innobackupex --apply-log 10.0.0.2_3306
+xtrabackup --prepare --target-dir 10.0.0.2_3306
 
 # 先按照mysql安装流程创建目录以及配置文件!!!
 # 文件恢复
-innobackupex --defaults-file=/data/mysql3306/conf/my.cnf --move-back 10.0.0.2_3306
+xtrabackup --defaults-file=/data/mysql3306/conf/my.cnf --move-back --target-dir 10.0.0.2_3306
 
 # 启动mysql
 mysqld_safe --defaults-file=/data/mysql3306/conf/my.cnf &
