@@ -4,7 +4,7 @@ title: "Others"
 header-img: "img/others-bg.jpg"
 ---
 # others
-[网址导航](/z/navigation/index.html)
+[网址导航](http://weideguo.github.io/navigation/)
 
 不是jekyll的目录，用于存放一些可以直接访问的html
 
@@ -23,8 +23,6 @@ z
 ├── z/matrix.html
 ├── z/minesweeper.html
 ├── z/mycounter.html
-├── z/navigation
-│   └── z/navigation/index.html
 ├── z/random_string.html
 ├── z/snake.html
 ├── z/tetris.html
